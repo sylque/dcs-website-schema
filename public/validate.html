@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="Sylvain Quendez" />
+    <meta name="generator" content="Jekyll v3.8.5" />
+    <title>Docuss - Website Description File Validator</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="validate.css" />
+  </head>
+  <body class="text-center">
+    <form id="docuss-form">
+      <!-- Logo and title -->
+      <div class="mb-5">
+        <img class="mb-1" src="docussLogoGreenH100.png" alt="" height="60" />
+        <h1 class="display-4" style="font-size:180%">Website Description File Validator</h1>
+      </div>
+
+      <!-- Tabs -->
+      <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" id="file" data-toggle="tab" href="#file-content" role="tab" aria-controls="home" aria-selected="true">Local file</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="url" data-toggle="tab" href="#url-content" role="tab" aria-controls="profile" aria-selected="false">URL</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="help" data-toggle="tab" href="#help-content" role="tab" aria-controls="profile" aria-selected="false">Help</a>
+        </li>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="file-content" role="tabpanel" aria-labelledby="file-tab">
+          <h2 class="h3 mb-3 font-weight-normal">
+            Your description file:
+          </h2>
+          <input id="inputFile" type="file" class="form-control mb-3" name="file" required autofocus />
+        </div>
+        <div class="tab-pane fade" id="url-content" role="tabpanel" aria-labelledby="url-tab">
+          <h2 class="h3 mb-3 font-weight-normal">
+            URL of your description file:
+          </h2>
+          <input id="inputUrl" type="url" class="form-control mb-3" name="url" autofocus />
+          <button class="btn btn-lg btn-primary" type="submit">Validate</button>
+        </div>
+        <div class="tab-pane fade text-left" id="help-content" role="tabpanel" aria-labelledby="help-tab">
+          <p>The JSON schema used for validation can be found <a href="../json/schema.json">here</a>.</p>
+          <p>
+            If you're puzzled by the validator error message, you can try
+            <a href="https://www.jsonschemavalidator.net/">this other validator</a>. Copy the schema from the above link to the left pane and your JSON text to
+            the right one.
+          </p>
+        </div>
+      </div>
+
+      <!-- Feedback -->
+      <div id="feedback" class="alert alert-danger alert-dismissible fade show mt-3 mb-3 text-left" style="display:none" role="alert">
+        <h5 class="alert-heading">Errors</h5>
+        <div class="alert-content"></div>
+        <button type="button" class="close" onclick="$('#feedback, #fileText').hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <!-- File text -->
+      <pre id="fileText" class="mt-3 mb-3 text-left" role="alert" style="display:none; border: 1px solid grey"></pre>
+
+      <!-- License -->
+      <p class="mt-5 mb-3 text-muted">
+        Use of this software is subject to the
+        <a href="https://github.com/sylque/docuss/blob/master/LICENSE">Fair Source 30</a>
+        license.
+      </p>
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ajv/6.10.0/ajv.min.js"></script>
+    <script src="validate.js"></script>
+  </body>
+</html>

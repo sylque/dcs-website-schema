@@ -1,0 +1,330 @@
+{
+  "title": "Docuss website descriptor schema",
+  "description": "Generated with https://app.quicktype.io. Validated with https://www.jsonschemavalidator.net",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$ref": "#/definitions/Docuss",
+  "definitions": {
+    "Docuss": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "title": "VSCode proprietary json extension to link a json file to its schema"
+        },
+        "websiteName": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_]+$",
+          "minLength": 1,
+          "maxLength": 20
+        },
+        "logo": {
+          "$ref": "#/definitions/Logo"
+        },
+        "dcsTag": {
+          "$ref": "#/definitions/DcsTag"
+        },
+        "proxyUrl": {
+          "type": "string",
+          "format": "uri"
+        },
+        "staticPages": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/StaticPage"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "dynamicPages": {
+          "$ref": "#/definitions/DynamicPages"
+        },
+        "redirects": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Redirect"
+          },
+          "uniqueItems": true
+        },
+        "clientData": {
+          "$ref": "#/definitions/ClientData"
+        }
+      },
+      "anyOf": [
+        { "required": ["dcsTag", "staticPages", "websiteName"] },
+        { "required": ["dcsTag", "dynamicPages", "websiteName"] }
+      ]
+    },
+    "ClientData": {
+      "type": "object",
+      "properties": {
+        "decorator": {
+          "$ref": "#/definitions/Decorator"
+        }
+      }
+    },
+    "Redirect": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "src": {
+          "$ref": "#/definitions/Route"
+        },
+        "dest": {
+          "$ref": "#/definitions/Route"
+        }
+      },
+      "required": ["src", "dest"]
+    },
+    "Route": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "pageName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "layout": {
+          "type": "string",
+          "enum": ["FULL_CLIENT", "WITH_SPLIT_BAR", "FULL_DISCOURSE"]
+        },
+        "interactMode": {
+          "type": "string",
+          "enum": ["COMMENT", "DISCUSS"]
+        },
+        "triggerId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "showRight": {
+          "type": "boolean"
+        }
+      }
+    },
+    "Decorator": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "category": {
+          "type": "string"
+        },
+        "discourseTitle": {
+          "type": "string"
+        },
+        "pageProperties": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PageProperties"
+          },
+          "uniqueItems": true
+        },
+        "injectCss": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/InjectCSS"
+          },
+          "uniqueItems": true
+        },
+        "injectTriggers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/InjectTriggers"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "InjectTriggers": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "pageNames": {
+          "$ref": "#/definitions/PageNames"
+        },
+        "ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_]+$"
+          },
+          "minItems": 1
+        },
+        "interactMode": {
+          "$ref": "#/definitions/DiscussionMode"
+        },
+        "ui": {
+          "$ref": "#/definitions/UI"
+        },
+        "category": {
+          "type": "string"
+        },
+        "discourseTitle": {
+          "type": "string"
+        }
+      },
+      "required": ["pageNames", "interactMode", "ids", "ui"]
+    },
+    "UI": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "cssSelector": {
+          "type": "string",
+          "minLength": 1
+        },
+        "highlightable": {
+          "type": "boolean"
+        },
+        "insertTextSpan": {
+          "type": "boolean"
+        },
+        "insertBalloon": {
+          "type": "boolean"
+        },
+        "insertCountBadge": {
+          "type": "boolean"
+        },
+        "subsection": {
+          "$ref": "#/definitions/Subsection"
+        }
+      },
+      "required": ["cssSelector"]
+    },
+    "Subsection": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "begin": {
+          "type": "string",
+          "minLength": 1
+        },
+        "end": {
+          "type": "string"
+        }
+      },
+      "required": ["begin"]
+    },
+    "InjectCSS": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "pageNames": {
+          "$ref": "#/definitions/PageNames"
+        },
+        "css": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": ["css", "pageNames"]
+    },
+    "DcsTag": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "maxPageNameLength": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "maxTriggerIdLength": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "forceLowercase": {
+          "type": "boolean"
+        }
+      },
+      "required": ["forceLowercase", "maxPageNameLength", "maxTriggerIdLength"]
+    },
+    "Logo": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "logoUrl": {
+          "type": "string",
+          "format": "uri-reference"
+        },
+        "mobileLogoUrl": {
+          "type": "string",
+          "format": "uri-reference"
+        },
+        "smallLogoUrl": {
+          "type": "string",
+          "format": "uri-reference"
+        }
+      },
+      "required": ["logoUrl"]
+    },
+    "PageProperties": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "pageNames": {
+          "$ref": "#/definitions/PageNames"
+        },
+        "interactMode": {
+          "$ref": "#/definitions/DiscussionMode"
+        },
+        "category": {
+          "type": "string"
+        },
+        "discourseTitle": {
+          "type": "string"
+        }
+      },
+      "required": ["pageNames"]
+    },
+    "StaticPage": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_]+$"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri-reference"
+        },
+        "needsProxy": {
+          "type": "boolean"
+        }
+      },
+      "required": ["name", "url"]
+    },
+    "DynamicPages": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "namePrefix": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_]+$"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri-reference"
+        },
+        "needsProxy": {
+          "type": "boolean"
+        }
+      },
+      "required": ["url"]
+    },
+    "PageNames": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9_]+$"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "DiscussionMode": {
+      "type": "string",
+      "enum": ["COMMENT", "DISCUSS"]
+    }
+  }
+}
