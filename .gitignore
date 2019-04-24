@@ -1,2 +1,6 @@
-.vscode
-private-tools
+*
+!README.md
+!package.json
+!package-lock.json
+!json
+!public
