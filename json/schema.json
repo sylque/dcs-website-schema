@@ -303,6 +303,10 @@
           "type": "string",
           "pattern": "^[A-Za-z0-9_]+$"
         },
+        "homePageName": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_]+$"
+        },
         "url": {
           "type": "string",
           "format": "uri-reference"
@@ -311,7 +315,7 @@
           "type": "boolean"
         }
       },
-      "required": ["url"]
+      "required": ["homePageName", "url"]
     },
     "PageNames": {
       "type": "array",
