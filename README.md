@@ -40,8 +40,8 @@ no interaction with Discourse.
 The above `dcsTag` section says: _When connecting a page, a menu or a balloon to
 Discourse, the Discourse tag used will be of the form `dcs-pageName-triggerId`,
 where pageName will be 1-6 characters long and triggerId_ (i.e. the id of the
-menu or balloon) _will be 0-9 characters long. Besides, the tag will be lower
-case only._
+menu or balloon) _will be 0-9 characters long. Besides, the tag will be
+lowercase only._
 
 ## Single page with discussions
 
