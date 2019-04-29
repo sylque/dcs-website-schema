@@ -1,10 +1,10 @@
 # dcs-website-schema
 
-In [Docuss](https://github.com/sylque/docuss), you use JSON website description
-files to describe your website, so that Docuss knows how to connect it to the
-Discourse plugin.
+In [Docuss](https://github.com/sylque/docuss), you use a JSON website
+description file to describe your website, so that Docuss knows how to connect
+it to the Discourse plugin.
 
-## Always validate your JSON file before use
+## Important: validate your JSON file before use
 
 Use the
 **[Docuss Validation Tool](https://sylque.github.io/dcs-website-schema/public/validate.html)**.
@@ -12,14 +12,12 @@ Use the
 Or use any other JSON validator, with
 [this schema](https://sylque.github.io/dcs-website-schema/json/schema.json).
 
-Failing to validate your file might break your website in many subtle ways.
+Failing to validate your file might break your website in subtle ways.
 
 ## Minimum file
 
 This file describes a website with a single home page named `index.html`, with
-no interaction with Discourse (unless you add a "Forum" menu pointing to
-`http://www.mydiscourse.org/latest`, as explained
-[here](https://github.com/sylque/dcs-discourse-plugin2#website-navigation)).
+no interaction with Discourse.
 
 ```
 {
@@ -39,10 +37,16 @@ no interaction with Discourse (unless you add a "Forum" menu pointing to
 }
 ```
 
-## Minimum file with discussions
+The above `dcsTag` section says: _When connecting a page, a menu or a balloon to
+Discourse, the Discourse tag used will be of the form `dcs-pageName-triggerId`,
+where pageName will be 1-6 characters long and triggerId_ (i.e. the id of the
+menu or balloon) _will be 0-9 characters long. Besides, the tag will be lower
+case only._
+
+## Single page with discussions
 
 This file describes a website with a single home page named `index.html`, with
-attached discussions.
+discussions attached to the page itself (no menu, no balloon).
 
 ```
 {
