@@ -98,6 +98,10 @@
         },
         "showRight": {
           "type": "boolean"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri-reference"
         }
       }
     },
