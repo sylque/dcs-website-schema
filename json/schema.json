@@ -269,9 +269,6 @@
         "pageNames": {
           "$ref": "#/definitions/PageNames"
         },
-        "interactMode": {
-          "$ref": "#/definitions/DiscussionMode"
-        },
         "category": {
           "type": "string"
         },
