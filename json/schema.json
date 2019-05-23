@@ -24,10 +24,6 @@
         "dcsTag": {
           "$ref": "#/definitions/DcsTag"
         },
-        "proxyUrl": {
-          "type": "string",
-          "format": "uri"
-        },
         "staticPages": {
           "type": "array",
           "items": {
@@ -85,23 +81,18 @@
           "minLength": 1
         },
         "layout": {
-          "type": "string",
-          "enum": ["FULL_CLIENT", "WITH_SPLIT_BAR", "FULL_DISCOURSE"]
+          "enum": [0, 1, 2, 3]
         },
         "interactMode": {
-          "type": "string",
           "enum": ["COMMENT", "DISCUSS"]
         },
         "triggerId": {
           "type": "string",
           "minLength": 1
         },
-        "showRight": {
-          "type": "boolean"
-        },
-        "url": {
+        "pathname": {
           "type": "string",
-          "format": "uri-reference"
+          "minLength": 1
         }
       }
     },
@@ -154,7 +145,7 @@
           "minItems": 1
         },
         "interactMode": {
-          "$ref": "#/definitions/DiscussionMode"
+          "enum": ["COMMENT", "DISCUSS"]
         },
         "ui": {
           "$ref": "#/definitions/UI"
@@ -326,10 +317,7 @@
       },
       "minItems": 1,
       "uniqueItems": true
-    },
-    "DiscussionMode": {
-      "type": "string",
-      "enum": ["COMMENT", "DISCUSS"]
     }
   }
 }
+

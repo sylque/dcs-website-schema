@@ -134,9 +134,6 @@ pane._
     "forceLowercase": true
   },
 
-  // Optional: private feature
-  "proxyUrl": "",
-
   // List of static pages. Optional if you define dynamicPages (see below).
   // Page names should obey the dcsTag.maxPageNameLength field above.
   // Page urls can be absolute or relative to the JSON file location.
