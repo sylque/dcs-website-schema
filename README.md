@@ -163,24 +163,28 @@ pane._
     "needsProxy": false
   },
 
-  // [Under construction]
+  // A redirect is a rule that tells Docuss, when it is about to transition to a 
+  // certain route (called the "source" route"), to transition to another route 
+  // instead (called the "destination" route"). Please see use cases here:
+  // https://github.com/sylque/dcs-client/blob/master/comToPlugin.md#set-redirects
+  //
+  // In the "dest" object, you can use "@SAME_AS_SRC@" as a value to indicate
+  // that you want the src value to be preserved.
   "redirects": [
     {
       "src": {
-        "pageName": "ABCDEF",
-        "layout": "WITH_SPLIT_BAR",
-        "interactMode": "DISCUSS",
-        "triggerId": "ABCDEFGHIJKLMNOPQRSTU",
-        "showRight": false,
-        "url": "ABCDEFGHI"
+        "layout": 0|1|2|3,
+        "pageName": "home",         // Only for layout=0|2|3
+        "interactMode": "DISCUSS",  // Only for layout=2|3
+        "triggerId": "info",        // Only for layout=2|3. Optional.
+        "pathname": "/badges"       // Only for layout=1
       },
       "dest": {
-        "pageName": "ABCDEFGHIJKLMNOPQRSTUVWX",
-        "layout": "WITH_SPLIT_BAR",
-        "interactMode": "COMMENT",
-        "triggerId": "ABCDE",
-        "showRight": true,
-        "url": "ABCDEFGHIJKLMNOPQRSTUVWXYZA"
+        "layout": 0|1|2|3,
+        "pageName": "missio",       // Only for layout=0|2|3
+        "interactMode": "COMMENT",  // Only for layout=2|3
+        "triggerId": "heading09",   // Only for layout=2|3. Optional.
+        "pathname": "/top"          // Only for layout=1
       }
     }
   ],
