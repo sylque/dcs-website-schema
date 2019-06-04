@@ -24,16 +24,16 @@
         "dcsTag": {
           "$ref": "#/definitions/DcsTag"
         },
-        "staticPages": {
+        "pages": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/StaticPage"
+            "$ref": "#/definitions/Page"
           },
           "minItems": 1,
           "uniqueItems": true
         },
-        "dynamicPages": {
-          "$ref": "#/definitions/DynamicPages"
+        "webApp": {
+          "$ref": "#/definitions/WebApp"
         },
         "redirects": {
           "type": "array",
@@ -46,10 +46,7 @@
           "$ref": "#/definitions/ClientData"
         }
       },
-      "anyOf": [
-        { "required": ["dcsTag", "staticPages", "websiteName"] },
-        { "required": ["dcsTag", "dynamicPages", "websiteName"] }
-      ]
+      "required": ["websiteName", "dcsTag", "pages"]
     },
     "ClientData": {
       "type": "object",
@@ -269,7 +266,7 @@
       },
       "required": ["pageNames"]
     },
-    "StaticPage": {
+    "Page": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -287,27 +284,16 @@
       },
       "required": ["name", "url"]
     },
-    "DynamicPages": {
+    "WebApp": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "namePrefix": {
+        "otherPagesPrefix": {
           "type": "string",
           "pattern": "^[A-Za-z0-9_]+$"
-        },
-        "homePageName": {
-          "type": "string",
-          "pattern": "^[A-Za-z0-9_]+$"
-        },
-        "url": {
-          "type": "string",
-          "format": "uri-reference"
-        },
-        "needsProxy": {
-          "type": "boolean"
         }
       },
-      "required": ["homePageName", "url"]
+      "required": ["otherPagesPrefix"]
     },
     "PageNames": {
       "type": "array",
@@ -320,4 +306,3 @@
     }
   }
 }
-

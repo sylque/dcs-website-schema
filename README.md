@@ -31,7 +31,7 @@ no interaction with Discourse.
     "forceLowercase": true
   },
 
-  "staticPages": [
+  "pages": [
     { "name": "home", "url": "index.html" }
   ]
 }
@@ -60,7 +60,7 @@ discussions attached to the page itself (no menu, no balloon).
     "forceLowercase": true
   },
 
-  "staticPages": [
+  "pages": [
     { "name": "home", "url": "index.html" }
   ],
 
@@ -134,33 +134,26 @@ pane._
     "forceLowercase": true
   },
 
-  // List of static pages. Optional if you define dynamicPages (see below).
+  // List of statically named pages. The first one is the landing page.
   // Page names should obey the dcsTag.maxPageNameLength field above.
   // Page urls can be absolute or relative to the JSON file location.
-  // "needsProxy": optional, private feature.
-  "staticPages": [
-    { "name": "home", "url": "index.html", "needsProxy": false },
-    { "name": "missio", "url": "mission.html", "needsProxy": false },
-    { "name": "aboutm", "url": "about-me.html", "needsProxy": false },
-    { "name": "lastev", "url": "last-event.html", "needsProxy": false },
-    { "name": "whitep", "url": "white-paper.html", "needsProxy": false }
+  "pages": [
+    { "name": "home", "url": "index.html" },
+    { "name": "missio", "url": "mission.html" },
+    { "name": "aboutm", "url": "about-me.html" },
+    { "name": "lastev", "url": "last-event.html" },
+    { "name": "whitep", "url": "white-paper.html" }
   ],
 
-  // Web app definition. Optional if you have defined static pages (see
-  // above)
-  "dynamicPages": {
-    // Web app url. Can be absolute or relative to the JSON file location.
-    "url": "/",
-
-    // Prefix for web app page names
-    "namePrefix": "d_",
-
-    // Page name of the initial page pointed to by the above url. Should
-    // obey the above dcsTag.maxPageNameLength and namePrefix fields.
-    "homePageName": "d_home",
-
-    // Optional: private feature
-    "needsProxy": false
+  // Set this field if you have a web app instead of website. When specified:
+  // - All page urls above must have the same origin
+  // - Only the initial page will be loaded into the iframe. Subsequent page
+  // changes will not trigger an iframe reload (it is of the responsability of
+  // the web app to manage page changes)
+  // - The web app can have other pages in addition to the ones defined above.
+  "webApp": {
+    // Prefix for the names of pages not defined in the "pages" field above
+    "otherPagesPrefix": "d_"
   },
 
   // A redirect is a rule that tells Docuss, when it is about to transition to a 
@@ -290,7 +283,7 @@ pane._
           // Optional: title of Discourse pages displayed in the right pane
           // when the trigger has been clicked in the left pane.
           // This overrides "decorator.discourseTitle" and
-          // "pagePropertiesdiscourseTitle".
+          // "pageProperties.discourseTitle".
           "discourseTitle": "What do you think about this paragraph?"
         }
       ]
