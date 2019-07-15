@@ -70,14 +70,21 @@ function loadFile(file) {
   const reader = new FileReader()
   reader.onload = e => {
     const data = reader.result
+    let n = 0
+    const array = data.split(/\r?\n/).map(line => {
+      const save = n.toString().padEnd(3, ' ') 
+      n += line.length + 2
+      return save + '  ' + line
+    })
+    const text = array.join('\n')
     $('#fileText')
-      .text(data)
+      .text(text)
       .show()
     let obj
     try {
       obj = JSON.parse(data)
     } catch (e) {
-      error('File Format Error', `File content doesn't seem to be JSON.`)
+      error('File Format Error', e)
       return
     }
     validate(obj)
