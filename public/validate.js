@@ -71,12 +71,12 @@ function loadFile(file) {
   reader.onload = e => {
     const data = reader.result
     let n = 0
-    const array = data.split(/\r?\n/).map(line => {
+    const array = data.split(/(\r?\n)/).map(line => {
       const save = n.toString().padEnd(3, ' ') 
-      n += line.length + 2
-      return save + '  ' + line
+      n += line.length
+      return line.endsWith('\n') ? line : save + '  ' + line
     })
-    const text = array.join('\n')
+    const text = array.join('')
     $('#fileText')
       .text(text)
       .show()
