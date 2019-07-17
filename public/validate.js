@@ -70,13 +70,7 @@ function loadFile(file) {
   const reader = new FileReader()
   reader.onload = e => {
     const data = reader.result
-    let n = 0
-    const array = data.split(/(\r?\n)/).map(line => {
-      const save = n.toString().padEnd(3, ' ') 
-      n += line.length
-      return line.endsWith('\n') ? line : save + '  ' + line
-    })
-    const text = array.join('')
+    const text = addLineNumbers(data)
     $('#fileText')
       .text(text)
       .show()
@@ -94,6 +88,18 @@ function loadFile(file) {
 
 //------------------------------------------------------------------------------
 
+function addLineNumbers(data) {
+  let n = 0
+  const array = data.split(/(\r?\n)/).map(line => {
+    const save = n.toString().padEnd(5, ' ')
+    n += line.length
+    return line.endsWith('\n') ? line : save + '┃' + line
+  })
+  return array.join('')
+}
+
+//------------------------------------------------------------------------------
+
 function loadUrl(url) {
   const button = $('button')
   function beginWait() {
@@ -106,18 +112,25 @@ function loadUrl(url) {
   }
   beginWait()
   $.getJSON(url, data => {
-    endWait()
     $('#fileText')
       .text(JSON.stringify(data, null, 2))
       .show()
     validate(data)
-  }).fail(() => {
-    endWait()
-    error(
-      'Loading Error',
-      'Unable to load the file. Possible causes: the file is missing or is not in JSON format.'
-    )
   })
+    .fail((resp, eType, eText) => {
+      if (eType === 'parsererror') {
+        error('Invalid File Format', eText)
+        const text = addLineNumbers(resp.responseText)
+        $('#fileText')
+          .text(text)
+          .show()    
+      } else {
+        error('Loading Error', 'Unable to find the file')
+      }
+    })
+    .always(() => {
+      endWait()
+    })
 }
 
 //------------------------------------------------------------------------------
