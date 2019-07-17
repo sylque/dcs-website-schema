@@ -59,6 +59,42 @@ $(document).ready(() => {
 
 //------------------------------------------------------------------------------
 
+function parseJsonText(text) {
+  const textArea = $('#fileText')
+  textArea.text(text).show()
+  let obj
+  try {
+    obj = JSON.parse(text)
+  } catch (e) {
+    const pos = parseInt(
+      e
+        .toString()
+        .split(' ')
+        .pop()
+    )
+    if (pos !== NaN) {
+      error(
+        'File Format Error',
+        'The highlighted section contains invalid JSON'
+      )
+      let html = textArea.text() // Prevent html injection
+      html = html.splice(pos + 5, 0, '</span>')
+      html = html.splice(
+        Math.max(pos - 15, 0),
+        0,
+        '<span style="background-color:yellow">'
+      )
+      textArea.html(html)
+    } else {
+      error('File Format Error', e)
+    }
+    return
+  }
+  validate(obj)
+}
+
+//------------------------------------------------------------------------------
+
 function loadFile(file) {
   if (file.type !== 'application/json') {
     error(
@@ -68,26 +104,12 @@ function loadFile(file) {
     return false
   }
   const reader = new FileReader()
-  reader.onload = e => {
-    const data = reader.result
-    const text = addLineNumbers(data)
-    $('#fileText')
-      .text(text)
-      .show()
-    let obj
-    try {
-      obj = JSON.parse(data)
-    } catch (e) {
-      error('File Format Error', e)
-      return
-    }
-    validate(obj)
-  }
+  reader.onload = e => parseJsonText(reader.result)
   reader.readAsText(file)
 }
 
 //------------------------------------------------------------------------------
-
+/*
 function addLineNumbers(data) {
   let n = 0
   const array = data.split(/(\r?\n)/).map(line => {
@@ -97,7 +119,7 @@ function addLineNumbers(data) {
   })
   return array.join('')
 }
-
+*/
 //------------------------------------------------------------------------------
 
 function loadUrl(url) {
@@ -111,26 +133,9 @@ function loadUrl(url) {
     $('body').removeClass('wait')
   }
   beginWait()
-  $.getJSON(url, data => {
-    $('#fileText')
-      .text(JSON.stringify(data, null, 2))
-      .show()
-    validate(data)
-  })
-    .fail((resp, eType, eText) => {
-      if (eType === 'parsererror') {
-        error('Invalid File Format', eText)
-        const text = addLineNumbers(resp.responseText)
-        $('#fileText')
-          .text(text)
-          .show()    
-      } else {
-        error('Loading Error', 'Unable to find the file')
-      }
-    })
-    .always(() => {
-      endWait()
-    })
+  $.get(url, text => parseJsonText(text), 'text')
+    .fail((resp, eType, eText) => error('Loading Error', eText))
+    .always(() => endWait())
 }
 
 //------------------------------------------------------------------------------
@@ -140,12 +145,9 @@ function validate(data) {
   if (valid) {
     success('File is valid')
   } else {
-    const array = validateFn.errors.map((o, i) => {
-      const err = Object.assign({}, o)
-      //delete err.dataPath
-      //delete err.schemaPath
-      return `Error ${i + 1}<pre>${JSON.stringify(err, null, 4)}</pre>`
-    })
+    const array = validateFn.errors.map(
+      o => `Invalid key "${o.dataPath.substring(1)}": ${o.message}`
+    )
     error('Validation Error(s)', ...array)
   }
 }
@@ -174,6 +176,28 @@ function success(title, ...arg) {
     .removeClass('alert-danger')
     .addClass('alert-success')
     .show()
+}
+
+//------------------------------------------------------------------------------
+
+if (!String.prototype.splice) {
+  /**
+   * {JSDoc}
+   *
+   * The splice() method changes the content of a string by removing a range of
+   * characters and/or adding new characters.
+   *
+   * @this {String}
+   * @param {number} start Index at which to start changing the string.
+   * @param {number} delCount An integer indicating the number of old chars to remove.
+   * @param {string} newSubStr The String that is spliced in.
+   * @return {string} A new string with the spliced substring.
+   */
+  String.prototype.splice = function(start, delCount, newSubStr) {
+    return (
+      this.slice(0, start) + newSubStr + this.slice(start + Math.abs(delCount))
+    )
+  }
 }
 
 //------------------------------------------------------------------------------
