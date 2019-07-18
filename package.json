@@ -1,12 +1,12 @@
 {
   "name": "dcs-website-schema",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "",
   "main": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Sylvain Quendez",
-  "license": "SEE LICENSE IN LICENSE",
+  "license": "MIT",
   "dependencies": {}
 }
