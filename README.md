@@ -145,12 +145,16 @@ pane._
     { "name": "whitep", "url": "white-paper.html" }
   ],
 
-  // Set this field if you have a web app instead of website. When specified:
-  // - All page urls above must have the same origin
-  // - Only the initial page will be loaded into the iframe. Subsequent page
-  // changes will not trigger an iframe reload (it is of the responsability of
-  // the web app to manage page changes)
-  // - The web app can have other pages in addition to the ones defined above.
+  // Set this field if you have a web app instead of website. For Docuss, a web
+  // app is a website that can change its pages without having the browser
+  // reloading an url.
+  // When specified:
+  // - All page urls in the "pages" section above must have the same origin.
+  // - The web app can have other pages in addition to the ones from the "pages" 
+  // section.
+  // - Only the first page of the list will be loaded into the iframe. 
+  // Subsequent page changes will not trigger an iframe reload (it is of the
+  // responsability of the web app to manage page changes).
   "webApp": {
     // Prefix for the names of pages not defined in the "pages" field above
     "otherPagesPrefix": "d_"
