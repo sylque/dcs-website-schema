@@ -150,9 +150,9 @@ pane._
   // reloading an url.
   // When specified:
   // - All page urls in the "pages" section above must have the same origin.
-  // - The web app can have other pages in addition to the ones from the "pages" 
+  // - The web app can have other pages in addition to the ones from the "pages"
   // section.
-  // - Only the first page of the list will be loaded into the iframe. 
+  // - Only the first page of the list will be loaded into the iframe.
   // Subsequent page changes will not trigger an iframe reload (it is of the
   // responsability of the web app to manage page changes).
   "webApp": {
@@ -160,13 +160,13 @@ pane._
     "otherPagesPrefix": "d_"
   },
 
-  // A redirect is a rule that tells Docuss, when it is about to transition to a 
-  // certain route (called the "source" route"), to transition to another route 
+  // A redirect is a rule that tells Docuss, when it is about to transition to a
+  // certain route (called the "source" route"), to transition to another route
   // instead (called the "destination" route"). Please see use cases here:
   // https://github.com/sylque/dcs-client/blob/master/comToPlugin.md#set-redirects
-  //
-  // In the "dest" object, you can use "@SAME_AS_SRC@" as a value to indicate
-  // that you want the src value to be preserved.
+  // In the "dest" object, you can use "@SAME_AS_SRC@" as a value: it will be
+  // replaced by the src value.
+  // "dest.pageName" supports a wildcard as a unique or trailing character.
   "redirects": [
     {
       "src": {
@@ -202,8 +202,9 @@ pane._
       // Optional: properties of website pages
       "pageProperties": [
         {
-          // Name of pages to apply the properties to
-          "pageNames": ["missio"],
+          // Name of pages to apply the properties to.
+          // Page names support a wildcard as a unique or trailing character.
+          "pageNames": ["home", "missio"],
 
           // Optional: name of the category to be used when Docuss creates
           // topics in the above pages. This overrides
@@ -220,8 +221,9 @@ pane._
       // Optional: css rules to inject in website pages
       "injectCss": [
         {
-          // Name of pages to inject css to
-          "pageNames": [ "home", "missio"],
+          // Name of pages to inject css to.
+          // Page names support a wildcard as a unique or trailing character.
+          "pageNames": ["about", "whitep"],
 
           // Css rules
           "css": ["nav, .headerlink { display: none }"]
@@ -232,11 +234,12 @@ pane._
       // triggers a Discourse page change when user clicks on it.
       "injectTriggers": [
         {
-          // Name of pages to inject triggers to
-          "pageNames": ["whitep"],
+          // Name of pages to inject triggers to.
+          // Page names support a wildcard as a unique or trailing character.
+          "pageNames": ["home", "missio"],
 
           // [Under construction]
-          "ids": ["GENERATE_FROM_HTML_ID"],
+          "ids": ["@GENERATE_FROM_HTML_ID@"],
 
           // Interaction mode: COMMENT or DISCUSS
           "interactMode": "DISCUSS",

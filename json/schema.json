@@ -61,37 +61,54 @@
       "additionalProperties": false,
       "properties": {
         "src": {
-          "$ref": "#/definitions/Route"
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "pageName": {
+              "$ref": "#/definitions/WildcardedPageName"
+            },
+            "layout": {
+              "enum": [0, 1, 2, 3]
+            },
+            "interactMode": {
+              "enum": ["COMMENT", "DISCUSS"]
+            },
+            "triggerId": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_]+$"
+            },
+            "pathname": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
         },
         "dest": {
-          "$ref": "#/definitions/Route"
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "pageName": {
+              "type": "string",
+              "pattern": "(?:^[A-Za-z0-9_]+$)|(?:^@SAME_AS_SRC@$)"
+            },
+            "layout": {
+              "enum": [0, 1, 2, 3, "@SAME_AS_SRC@"]
+            },
+            "interactMode": {
+              "enum": ["COMMENT", "DISCUSS", "@SAME_AS_SRC@"]
+            },
+            "triggerId": {
+              "type": "string",
+              "pattern": "(?:^[A-Za-z0-9_]+$)|(?:^@SAME_AS_SRC@$)"
+            },
+            "pathname": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
         }
       },
       "required": ["src", "dest"]
-    },
-    "Route": {
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "pageName": {
-          "type": "string",
-          "minLength": 1
-        },
-        "layout": {
-          "enum": [0, 1, 2, 3]
-        },
-        "interactMode": {
-          "enum": ["COMMENT", "DISCUSS"]
-        },
-        "triggerId": {
-          "type": "string",
-          "minLength": 1
-        },
-        "pathname": {
-          "type": "string",
-          "minLength": 1
-        }
-      }
     },
     "Decorator": {
       "type": "object",
@@ -137,7 +154,7 @@
           "type": "array",
           "items": {
             "type": "string",
-            "pattern": "^[A-Za-z0-9_]+$"
+            "pattern": "(?:^[A-Za-z0-9_]+$)|(?:^@GENERATE@$)|(?:^@GENERATE_FROM_HTML_ID@$)"
           },
           "minItems": 1
         },
@@ -295,11 +312,14 @@
       },
       "required": ["otherPagesPrefix"]
     },
+    "WildcardedPageName": {
+      "type": "string",
+      "pattern": "(?:^[A-Za-z0-9_]+\\*?$)|(?:^\\*$)"
+    },
     "PageNames": {
       "type": "array",
       "items": {
-        "type": "string",
-        "pattern": "^[A-Za-z0-9_]+$"
+        "$ref": "#/definitions/WildcardedPageName"
       },
       "minItems": 1,
       "uniqueItems": true
