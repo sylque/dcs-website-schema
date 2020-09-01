@@ -4,6 +4,8 @@ In [Docuss](https://github.com/sylque/docuss), you use a JSON website
 description file to describe your website, so that Docuss knows how to connect
 it to the Discourse plugin.
 
+**This project is not active anymore.** Fixes are provided to existing users, but I stopped working on new features. You might want to check  [DiscPage](https://github.com/sylque/discpage), which is somehow a simplified version of Docuss.
+
 ## Important: validate your JSON file before use
 
 Use the
